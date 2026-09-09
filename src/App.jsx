@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { syncAllData } from "./services/sync";
 import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
@@ -10,6 +12,33 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 
 function App() {
+  /*
+  ========================================
+  AUTOMATIC DATA SYNC
+  ========================================
+  */
+
+  useEffect(() => {
+    // Sync latest data when the app opens
+    syncAllData();
+
+    // Sync latest data when internet comes back
+    const handleOnline = () => {
+      console.log(
+        "Internet restored - downloading latest Triveni Pustakalaya data..."
+      );
+
+      syncAllData();
+    };
+
+    window.addEventListener("online", handleOnline);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("online", handleOnline);
+    };
+  }, []);
+
   return (
     <div className="app">
 
@@ -18,7 +47,10 @@ function App() {
       <main>
         <Routes>
 
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={<Home />}
+          />
 
           <Route
             path="/subjects"
