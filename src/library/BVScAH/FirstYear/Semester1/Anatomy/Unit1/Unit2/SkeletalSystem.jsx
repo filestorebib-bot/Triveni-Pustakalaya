@@ -1,5 +1,5 @@
 export const articleMeta = {
-  title: "Skeletal System",
+  title: "Bibash Lamichhane",
   description: "Structure and basic organization of the skeletal system.",
   type: "Article",
 };
